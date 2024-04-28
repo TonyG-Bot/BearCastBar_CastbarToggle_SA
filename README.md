@@ -29,7 +29,7 @@ The cast bars look choppy because of the poor GIF quality.
 
 ### Options
 
-![image](https://github.com/CrackedMustache/BearCastBar_CastbarToggle/assets/168352961/384dcd38-d482-43c8-be80-ffd895a92885)
+![image](https://github.com/CrackedMustache/BearCastBar_CastbarToggle/assets/168352961/54f1cba2-41c4-4c83-9a75-9402756ad7ff)
 
 Options:
 
