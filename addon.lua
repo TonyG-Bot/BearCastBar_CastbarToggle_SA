@@ -1,6 +1,6 @@
 SLASH_BCB1, SLASH_BCB2  = '/bcb', '/bear';
 
-local bcb = {}
+bcb = {}
 local oldUseAction
 local safeZone= 0.1
 local barHeight = 28
@@ -162,6 +162,7 @@ function bcb:ADDON_LOADED(name)
             BCB_SAVED.debug = false
             BCB_SAVED.abar_is_enabled = true
             BCB_SAVED.hunter_is_enabled = true
+            BCB_SAVED.castbar_is_enabled = true
 
             bcb.debug("Variable load failed. Using defaults.")
         end
@@ -209,6 +210,10 @@ function bcb:ADDON_LOADED(name)
         if(BCB_SAVED.hunter_is_enabled == nil) then
             BCB_SAVED.hunter_is_enabled = true
         end
+
+        if( BCB_SAVED.castbar_is_enabled == nil) then
+             BCB_SAVED.castbar_is_enabled = true
+        end
         
 
     end    
@@ -226,9 +231,10 @@ function bcb:PLAYER_ENTERING_WORLD()
 
     this:UnregisterEvent("PLAYER_ENTERING_WORLD")
 
-    CastingBarFrame:Hide()
-    CastingBarFrame:UnregisterAllEvents()
-
+    if (BCB_SAVED.castbar_is_enabled) then 
+        CastingBarFrame:Hide()
+        CastingBarFrame:UnregisterAllEvents()
+    end 
     --- config frame
 
     self.configFrame = CreateFrame("FRAME", "BearCastBar_ConfigFrame", UIParent)
@@ -556,11 +562,30 @@ function bcb:PLAYER_ENTERING_WORLD()
         end      
     end)
 
+    self.configFrame.attackBarConfigFrame.CastBar = CreateFrame("CheckButton", "bcb_GlobalCheckbox_CastBar", self.configFrame.attackBarConfigFrame, "UICheckButtonTemplate");
+    self.configFrame.attackBarConfigFrame.CastBar:SetPoint("TOPLEFT",self.configFrame.attackBarConfigFrame, 10, -125)
+    bcb_GlobalCheckbox_CastBarText:SetText(L["Castbar enabled"])
+
+    if (BCB_SAVED.castbar_is_enabled == true) then
+        self.configFrame.attackBarConfigFrame.CastBar:SetChecked(true)
+    end 
+
+    self.configFrame.attackBarConfigFrame.CastBar:SetScript("OnClick", function()
+            
+        if self.configFrame.attackBarConfigFrame.CastBar:GetChecked() then
+            -- enable bar
+            SlashCmdList["ATKBAR"]("caston");
+        else
+            -- disable bar 
+            SlashCmdList["ATKBAR"]("castoff")
+        end      
+    end)
 
 
------------------------
-    --- CAST BAR ---
------------------------
+
+    -----------------------
+        --- CAST BAR ---
+    -----------------------
 
     self.frame:SetWidth(BCB_SAVED.width+8)
     self.frame:SetHeight(BCB_SAVED.height+8)
@@ -672,7 +697,6 @@ function bcb:PLAYER_ENTERING_WORLD()
     self.resetLag = false
 
     self.frame:Hide() --debugging
-
 end
 
 function bcb.setHeight(height)

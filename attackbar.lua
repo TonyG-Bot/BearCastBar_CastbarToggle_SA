@@ -120,6 +120,26 @@ function Abar_chat(msg)
 		BCB_SAVED.hunter_is_enabled = false
 	elseif msg=="hunton" then
 		BCB_SAVED.hunter_is_enabled = true
+	elseif msg=="caston" then
+		BCB_SAVED.castbar_is_enabled = true
+		CastingBarFrame:Hide()
+        CastingBarFrame:UnregisterAllEvents()
+
+		bcb.frame:RegisterEvent("SPELLCAST_START")
+		bcb.frame:RegisterEvent("SPELLCAST_CHANNEL_START")
+		bcb.frame:RegisterEvent("SPELLCAST_CHANNEL_STOP")
+		bcb.frame:RegisterEvent("SPELLCAST_CHANNEL_UPDATE")
+		bcb.frame:RegisterEvent("SPELLCAST_STOP")
+		bcb.frame:RegisterEvent("SPELLCAST_DELAYED")
+		bcb.frame:RegisterEvent("SPELLCAST_INTERRUPTED")--CHAT_MSG_SPELL_FAILED_LOCALPLAYER --SPELLCAST_CHANNEL_START
+		bcb.frame:RegisterEvent("CHAT_MSG_SPELL_FAILED_LOCALPLAYER")
+		
+	elseif msg=="castoff" then
+		BCB_SAVED.castbar_is_enabled = false
+		CastingBarFrame:Show()
+        CastingBarFrame:RegisterAllEvents()
+
+		bcb.frame:UnregisterAllEvents()
 	else
 		DEFAULT_CHAT_FRAME:AddMessage(L['lock - to lock and hide the anchor']);
 		DEFAULT_CHAT_FRAME:AddMessage(L['unlock - to unlock and show the anchor']);
@@ -127,7 +147,10 @@ function Abar_chat(msg)
 		DEFAULT_CHAT_FRAME:AddMessage(L['enable - to enable the attack bar']);
 		DEFAULT_CHAT_FRAME:AddMessage(L['huntoff - to disable the hunter abilities']);
 		DEFAULT_CHAT_FRAME:AddMessage(L['hunton - to enable the hunter abilities']);
+		DEFAULT_CHAT_FRAME:AddMessage(L['castoff - to disable the cast bar']);
+		DEFAULT_CHAT_FRAME:AddMessage(L['caston - to enable the cast bar']);
 	end
+	DEFAULT_CHAT_FRAME:AddMessage(L['Changed!']);
 end
 
 function Abar_selfhit()
