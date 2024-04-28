@@ -136,7 +136,7 @@ function Abar_chat(msg)
 		
 	elseif msg=="castoff" then
 		BCB_SAVED.castbar_is_enabled = false
-		CastingBarFrame:Show()
+		bcb.frame:Hide()
         CastingBarFrame:RegisterAllEvents()
 
 		bcb.frame:UnregisterAllEvents()
@@ -150,7 +150,6 @@ function Abar_chat(msg)
 		DEFAULT_CHAT_FRAME:AddMessage(L['castoff - to disable the cast bar']);
 		DEFAULT_CHAT_FRAME:AddMessage(L['caston - to enable the cast bar']);
 	end
-	DEFAULT_CHAT_FRAME:AddMessage(L['Changed!']);
 end
 
 function Abar_selfhit()

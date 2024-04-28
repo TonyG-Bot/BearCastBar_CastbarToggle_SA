@@ -220,21 +220,23 @@ function bcb:ADDON_LOADED(name)
 end
 
 function bcb:PLAYER_ENTERING_WORLD()
-    this:RegisterEvent("SPELLCAST_START")
-    this:RegisterEvent("SPELLCAST_CHANNEL_START")
-    this:RegisterEvent("SPELLCAST_CHANNEL_STOP")
-    this:RegisterEvent("SPELLCAST_CHANNEL_UPDATE")
-    this:RegisterEvent("SPELLCAST_STOP")
-    this:RegisterEvent("SPELLCAST_DELAYED")
-    this:RegisterEvent("SPELLCAST_INTERRUPTED")--CHAT_MSG_SPELL_FAILED_LOCALPLAYER --SPELLCAST_CHANNEL_START
-    this:RegisterEvent("CHAT_MSG_SPELL_FAILED_LOCALPLAYER")
-
-    this:UnregisterEvent("PLAYER_ENTERING_WORLD")
 
     if (BCB_SAVED.castbar_is_enabled) then 
+        this:RegisterEvent("SPELLCAST_START")
+        this:RegisterEvent("SPELLCAST_CHANNEL_START")
+        this:RegisterEvent("SPELLCAST_CHANNEL_STOP")
+        this:RegisterEvent("SPELLCAST_CHANNEL_UPDATE")
+        this:RegisterEvent("SPELLCAST_STOP")
+        this:RegisterEvent("SPELLCAST_DELAYED")
+        this:RegisterEvent("SPELLCAST_INTERRUPTED")--CHAT_MSG_SPELL_FAILED_LOCALPLAYER --SPELLCAST_CHANNEL_START
+        this:RegisterEvent("CHAT_MSG_SPELL_FAILED_LOCALPLAYER")
+
         CastingBarFrame:Hide()
         CastingBarFrame:UnregisterAllEvents()
     end 
+
+    this:UnregisterEvent("PLAYER_ENTERING_WORLD")
+
     --- config frame
 
     self.configFrame = CreateFrame("FRAME", "BearCastBar_ConfigFrame", UIParent)
@@ -564,7 +566,7 @@ function bcb:PLAYER_ENTERING_WORLD()
 
     self.configFrame.attackBarConfigFrame.CastBar = CreateFrame("CheckButton", "bcb_GlobalCheckbox_CastBar", self.configFrame.attackBarConfigFrame, "UICheckButtonTemplate");
     self.configFrame.attackBarConfigFrame.CastBar:SetPoint("TOPLEFT",self.configFrame.attackBarConfigFrame, 10, -125)
-    bcb_GlobalCheckbox_CastBarText:SetText(L["Castbar enabled"])
+    bcb_GlobalCheckbox_CastBarText:SetText(L["Cast bar enabled"])
 
     if (BCB_SAVED.castbar_is_enabled == true) then
         self.configFrame.attackBarConfigFrame.CastBar:SetChecked(true)
