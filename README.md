@@ -36,6 +36,7 @@ Options:
 - Lag protection: reduces the size of the red area to ensure that you can finish casts.
 - Disable attack bar: disables the whole attack bar (in case you want to use another swing timer)
 - Disable hunter abilities: disables auto-shot, aimed shot and multi-shot (in case you want to use another hunter timer)
+- Disable cast bar: disables the cast bar and reverts back to the blizzard one
 
 Feel free to develop the addon further. 
 
