@@ -1,5 +1,5 @@
 ## Interface: 11200
-## Title: Bear Cast Bar with Toggle 1.0
+## Title: Bear Cast Bar 1.2
 ## Notes: Replaces default cast bar. Latency spell cancel support. Attack timers.
 ## Notes-ruRU: Заменяет панель произнесения. Поддержка задержки заклинаний. Таймеры атаки.
 ## Author: Kuroneko
