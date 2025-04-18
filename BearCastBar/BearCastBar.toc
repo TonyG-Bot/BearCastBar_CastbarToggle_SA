@@ -1,6 +1,6 @@
 ## Interface: 11200
 ## Title: Bear Cast Bar |cff008000Turtle|r SA
-## Notes: Versión de BearCastBar modificada para TurtleWoW SA.
+## Notes: Versión modificada de BearCastBar para Turtle WoW SA.
 ## Notes-enUS: Replaces default cast bar. Latency spell cancel support. Attack timers.
 ## Notes-ruRU: Заменяет панель произнесения. Поддержка задержки заклинаний. Таймеры атаки.
 ## Version: GIT
