@@ -1,9 +1,9 @@
 ## Interface: 11200
 ## Title: Bear Cast Bar 1.2
-## Notes: Replaces default cast bar. Latency spell cancel support. Attack timers.
-## Notes-esES: Versión de BearCastBar modificada para TurtleWoW SA.
+## Notes: Versión de BearCastBar modificada para TurtleWoW SA.
+## Notes-enUS: Replaces default cast bar. Latency spell cancel support. Attack timers.
 ## Notes-ruRU: Заменяет панель произнесения. Поддержка задержки заклинаний. Таймеры атаки.
-## Author: Kuroneko, CrackedMustache, TonyG-Bot
+## Author: Kuroneko, Fiskehatt, CrackedMustache, TonyG-Bot
 ## OptionalDeps:
 ## SavedVariables:
 ## SavedVariablesPerCharacter: BCB_SAVED
