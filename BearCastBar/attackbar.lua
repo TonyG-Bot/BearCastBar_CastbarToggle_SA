@@ -211,6 +211,7 @@ function Abar_spellhit(arg1)
 	if not spell then 	a,b,spell=string.find (arg1, L["Your (.+) crits"]) end
 	if not spell then 	a,b,spell=string.find (arg1, L["Your (.+) is"]) end
 	if not spell then	a,b,spell=string.find (arg1, L["Your (.+) misses"]) end
+	if not spell then	a,b,spell=string.find (arg1, L["Your (.+) was"]) end
 	
 	rs,rhd,rld =UnitRangedDamage("player");
 	rhd,rld= rhd-math.mod(rhd,1),rld-math.mod(rld,1)
