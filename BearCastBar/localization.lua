@@ -80,22 +80,22 @@ if GetLocale() == "esES" then
 	L["Your (.+) is"] = "Tu (.+) es"
 	L["Your (.+) misses"] = "Tu (.+) falla al atacar a"
 	L["Your (.+) was"] = "Tu (.+) fue"
-	L["Auto Shot"] = "Disparo Automático"
+	L["Auto Shot"] = "Tiro Automático"
 	L["Shoot"] = "Disparar"
 	L["Wand"] = "Varita"
 	L["Raptor Strike"] = "Golpe de Raptor"
 	L["Heroic Strike"] = "Golpe Heroico"
-	L["Maul"] = "Maza"--?
-	L["Cleave"] = "Golpe Mortal"--?
+	L["Maul"] = "Machaque"
+	L["Cleave"] = "Rajar"
 	L["Throw"] = "Lanzar"
 	L["Shoot Bow"] = "Disparar Arco"
 	L["Bow"] = "Arco"
-	L["Shoot Gun"] = "Disparar Pistola"--?
+	L["Shoot Gun"] = "Disparar Arma de Fuego"
 	L["Gun"] = "Arma de Fuego"
 	L["Shoot Crossbow"] = "Disparar Ballesta"
 	L["X-Bow"] = "Ballesta"
-	L["Aimed Shot"] = "Disparo Apuntado"--?
-	L["Multi-Shot"] = "Disparo Múltiple"
+	L["Aimed Shot"] = "Disparo de Puntería"
+	L["Multi-Shot"] = "Multidisparo"
 	L["Reloading"] = "Recargando"
 end
 
