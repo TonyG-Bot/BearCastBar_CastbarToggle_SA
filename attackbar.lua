@@ -82,7 +82,7 @@ function Abar_loaded()
 		BCB_SAVED.attackBarPoint = "CENTER"
 		BCB_SAVED.attackBarRelativePoint = "CENTER"
 		BCB_SAVED.attackBarxOfs = 0
-		BCB_SAVED.attackBaryOfs = -480
+		BCB_SAVED.attackBaryOfs = -100
 	end
 
 	Abar_Frame:ClearAllPoints()
