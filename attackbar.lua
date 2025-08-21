@@ -72,7 +72,7 @@ function Abar_loaded()
         if abar.timer == nil then abar.timer = true end
     end
 
-    -- Restaurar o establecer posición por defecto de Abar_Frame
+    -- Establecer posición por defecto de Abar_Frame
     if not BCB_SAVED.attackBarPoint then
         BCB_SAVED.attackBarPoint = "CENTER"
         BCB_SAVED.attackBarRelativePoint = "CENTER"
@@ -89,9 +89,22 @@ function Abar_loaded()
         BCB_SAVED.attackBaryOfs
     )
 
-    -- Habilitar movimiento del frame
-    Abar_Frame:SetMovable(true)
-    Abar_Frame:EnableMouse(true)
+-- Función para guardar la posición del frame
+local function SaveFramePosition(frame)
+    local point, _, relativePoint, xOfs, yOfs = frame:GetPoint()
+    BCB_SAVED.attackBarPoint = point
+    BCB_SAVED.attackBarRelativePoint = relativePoint
+    BCB_SAVED.attackBarxOfs = xOfs
+    BCB_SAVED.attackBaryOfs = yOfs
+end
+
+-- Aplicar estado de bloqueo
+local isLocked = BCB_SAVED.abar_locked == true
+
+    Abar_Frame:SetMovable(not isLocked)
+    Abar_Frame:EnableMouse(not isLocked)
+
+if not isLocked then
     Abar_Frame:RegisterForDrag("LeftButton")
 
     Abar_Frame:SetScript("OnDragStart", function(self)
@@ -100,12 +113,22 @@ function Abar_loaded()
 
     Abar_Frame:SetScript("OnDragStop", function(self)
         self:StopMovingOrSizing()
-        local point, _, relativePoint, xOfs, yOfs = self:GetPoint()
-        BCB_SAVED.attackBarPoint = point
-        BCB_SAVED.attackBarRelativePoint = relativePoint
-        BCB_SAVED.attackBarxOfs = xOfs
-        BCB_SAVED.attackBaryOfs = yOfs
+        SaveFramePosition(self)
     end)
+
+    Abar_Frame:SetScript("OnMouseUp", function(self, button)
+        if button == "LeftButton" then
+            self:StopMovingOrSizing()
+            SaveFramePosition(self)
+        end
+    end)
+else
+
+    -- Si está bloqueado, eliminar scripts de movimiento
+    Abar_Frame:SetScript("OnDragStart", nil)
+    Abar_Frame:SetScript("OnDragStop", nil)
+    Abar_Frame:SetScript("OnMouseUp", nil)
+end
 
     Abar_Mhr:SetPoint("LEFT", Abar_Frame, "TOPLEFT", 6, -13)
     Abar_Oh:SetPoint("LEFT", Abar_Frame, "TOPLEFT", 6, -35)
@@ -120,11 +143,17 @@ function Abar_chat(msg)
 		Abar_reset()
 	elseif msg=="lock" then
 		Abar_Frame:Hide()
+		BCB_SAVED.abar_locked = true
+		Abar_loaded()
+		print("Attack bar locked.")
 		--ebar_Frame:Hide()
 	elseif msg=="unlock" then
 		Abar_Frame:Show()
+		BCB_SAVED.abar_locked = false
+		Abar_loaded()
+		print("Attack bar unlocked.")
 		--ebar_Frame:Show()
-	elseif msg=="disable" then 
+	elseif msg=="disable" then
 		abar_core:UnregisterAllEvents()
 		BCB_SAVED.abar_is_enabled = false
 		abar.range = false
@@ -189,7 +218,7 @@ function Abar_selfhit()
 	hd,ld= hd-math.mod(hd,1),ld-math.mod(ld,1)
 	if old then
 		ohd,old = ohd-math.mod(ohd,1),old-math.mod(old,1)
-end	
+end
 
 if offs then
 	ont,offt=GetTime(),GetTime()
@@ -219,12 +248,12 @@ end
 end
 
 function Abar_reset()
-	pont=0.000
-	pofft= 0.000
-	ont=0.000
-	offt= 0.000
-	onid=0
-	offid=0
+    BCB_SAVED.attackBarPoint = "CENTER"
+    BCB_SAVED.attackBarRelativePoint = "CENTER"
+    BCB_SAVED.attackBarxOfs = 0
+    BCB_SAVED.attackBaryOfs = -150
+    Abar_loaded()
+    print("Attack bar position reset.")
 end
 
 function Abar_event(event)
@@ -335,8 +364,6 @@ function abar_spelldir(spellname)
 	end
 	end
 
-
-	
 function Abar_Update()
 	local ttime = GetTime()
 	local left = 0.00
