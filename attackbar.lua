@@ -75,7 +75,37 @@ function Abar_loaded()
 		if abar.timer == nil then
 			abar.timer=true
 		end
-	end 
+	end
+
+	-- Restaurar o establecer posición por defecto de Abar_Frame
+	if not BCB_SAVED.attackBarPoint then
+		BCB_SAVED.attackBarPoint = "CENTER"
+		BCB_SAVED.attackBarRelativePoint = "CENTER"
+		BCB_SAVED.attackBarxOfs = 0
+		BCB_SAVED.attackBaryOfs = -480
+	end
+
+	Abar_Frame:ClearAllPoints()
+	Abar_Frame:SetPoint(
+		BCB_SAVED.attackBarPoint,
+		UIParent,
+		BCB_SAVED.attackBarRelativePoint,
+		BCB_SAVED.attackBarxOfs,
+		BCB_SAVED.attackBaryOfs
+	)
+
+	-- Asignar el script para guardar la posición cuando se suelta el frame
+	Abar_Frame:SetScript("OnMouseUp", function(self, button)
+		if button == "LeftButton" then
+			self:StopMovingOrSizing()
+			local point, _, relativePoint, xOfs, yOfs = self:GetPoint()
+			BCB_SAVED.attackBarPoint = point
+			BCB_SAVED.attackBarRelativePoint = relativePoint
+			BCB_SAVED.attackBarxOfs = xOfs
+			BCB_SAVED.attackBaryOfs = yOfs
+		end
+	end)
+
 	Abar_Mhr:SetPoint("LEFT",Abar_Frame,"TOPLEFT",6,-13)
 	Abar_Oh:SetPoint("LEFT",Abar_Frame,"TOPLEFT",6,-35)
 	Abar_MhrText:SetJustifyH("Left")
