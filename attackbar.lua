@@ -57,60 +57,61 @@ end
 CastSpell = abar_casspl
 
 function Abar_loaded()
-	SlashCmdList["ATKBAR"] = Abar_chat;
-	SLASH_ATKBAR1 = "/abar";
-	SLASH_ATKBAR2 = "/atkbar";
-	if BCB_SAVED.abar_is_enabled == false then
-		abar.range = false
-		abar.h2h = false
-		abar.timer = false
-		abar_core:UnregisterAllEvents()
-	else 
-		if abar.range == nil then
-			abar.range=true
-		end
-		if abar.h2h == nil then
-			abar.h2h=true
-		end
-		if abar.timer == nil then
-			abar.timer=true
-		end
-	end
+    SlashCmdList["ATKBAR"] = Abar_chat;
+    SLASH_ATKBAR1 = "/abar";
+    SLASH_ATKBAR2 = "/atkbar";
 
-	-- Restaurar o establecer posición por defecto de Abar_Frame
-	if not BCB_SAVED.attackBarPoint then
-		BCB_SAVED.attackBarPoint = "CENTER"
-		BCB_SAVED.attackBarRelativePoint = "CENTER"
-		BCB_SAVED.attackBarxOfs = 0
-		BCB_SAVED.attackBaryOfs = -175
-	end
+    if BCB_SAVED.abar_is_enabled == false then
+        abar.range = false
+        abar.h2h = false
+        abar.timer = false
+        abar_core:UnregisterAllEvents()
+    else 
+        if abar.range == nil then abar.range = true end
+        if abar.h2h == nil then abar.h2h = true end
+        if abar.timer == nil then abar.timer = true end
+    end
 
-	Abar_Frame:ClearAllPoints()
-	Abar_Frame:SetPoint(
-		BCB_SAVED.attackBarPoint,
-		UIParent,
-		BCB_SAVED.attackBarRelativePoint,
-		BCB_SAVED.attackBarxOfs,
-		BCB_SAVED.attackBaryOfs
-	)
+    -- Restaurar o establecer posición por defecto de Abar_Frame
+    if not BCB_SAVED.attackBarPoint then
+        BCB_SAVED.attackBarPoint = "CENTER"
+        BCB_SAVED.attackBarRelativePoint = "CENTER"
+        BCB_SAVED.attackBarxOfs = 0
+        BCB_SAVED.attackBaryOfs = -150
+    end
 
-	-- Asignar el script para guardar la posición cuando se suelta el frame
-	Abar_Frame:SetScript("OnMouseUp", function(self, button)
-		if button == "LeftButton" then
-			self:StopMovingOrSizing()
-			local point, _, relativePoint, xOfs, yOfs = self:GetPoint()
-			BCB_SAVED.attackBarPoint = point
-			BCB_SAVED.attackBarRelativePoint = relativePoint
-			BCB_SAVED.attackBarxOfs = xOfs
-			BCB_SAVED.attackBaryOfs = yOfs
-		end
-	end)
+    Abar_Frame:ClearAllPoints()
+    Abar_Frame:SetPoint(
+        BCB_SAVED.attackBarPoint,
+        UIParent,
+        BCB_SAVED.attackBarRelativePoint,
+        BCB_SAVED.attackBarxOfs,
+        BCB_SAVED.attackBaryOfs
+    )
 
-	Abar_Mhr:SetPoint("LEFT",Abar_Frame,"TOPLEFT",6,-13)
-	Abar_Oh:SetPoint("LEFT",Abar_Frame,"TOPLEFT",6,-35)
-	Abar_MhrText:SetJustifyH("Left")
-	Abar_OhText:SetJustifyH("Left")
-	--ebar_VL()
+    -- Habilitar movimiento del frame
+    Abar_Frame:SetMovable(true)
+    Abar_Frame:EnableMouse(true)
+    Abar_Frame:RegisterForDrag("LeftButton")
+
+    Abar_Frame:SetScript("OnDragStart", function(self)
+        self:StartMoving()
+    end)
+
+    Abar_Frame:SetScript("OnDragStop", function(self)
+        self:StopMovingOrSizing()
+        local point, _, relativePoint, xOfs, yOfs = self:GetPoint()
+        BCB_SAVED.attackBarPoint = point
+        BCB_SAVED.attackBarRelativePoint = relativePoint
+        BCB_SAVED.attackBarxOfs = xOfs
+        BCB_SAVED.attackBaryOfs = yOfs
+    end)
+
+    Abar_Mhr:SetPoint("LEFT", Abar_Frame, "TOPLEFT", 6, -13)
+    Abar_Oh:SetPoint("LEFT", Abar_Frame, "TOPLEFT", 6, -35)
+    Abar_MhrText:SetJustifyH("Left")
+    Abar_OhText:SetJustifyH("Left")
+    -- ebar_VL()
 end
 
 function Abar_chat(msg)
