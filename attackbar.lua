@@ -255,17 +255,6 @@ function Abar_spellhit(arg1)
         rs = rs - math.mod(rs, 0.01)
         Abar_Mhrs(trs, L["Wand"].." "..rs..L["s"], .7, .1, 1)
 
-    elseif spell == L["Mongoose Bite"] and abar.h2h == true then
-        local ons, offs = UnitAttackSpeed("player")
-        if ons then
-            ons = ons - math.mod(ons, 0.01)
-            Abar_Mhrs(ons, L["Mongoose Bite"].." "..ons..L["s"], 0.8, 0.4, 0.1)
-        end
-        if offs then
-            offs = offs - math.mod(offs, 0.01)
-            Abar_Ohs(offs, L["Mongoose Bite"].." "..offs..L["s"], 1, 0.2, 0.2)
-        end
-
     elseif (spell == L["Raptor Strike"] or spell == L["Heroic Strike"] or
             spell == L["Maul"] or spell == L["Cleave"]) and abar.h2h == true then
         hd, ld, ohd, lhd = UnitDamage("player")
