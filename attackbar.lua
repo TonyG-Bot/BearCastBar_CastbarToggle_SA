@@ -235,33 +235,47 @@ function Abar_event(event)
 end
 
 function Abar_spellhit(arg1)
-	a,b,spell=string.find (arg1, L["Your (.+) hits"])
-	if not spell then 	a,b,spell=string.find (arg1, L["Your (.+) crits"]) end
-	if not spell then 	a,b,spell=string.find (arg1, L["Your (.+) is"]) end
-	if not spell then	a,b,spell=string.find (arg1, L["Your (.+) misses"]) end
-	if not spell then	a,b,spell=string.find (arg1, L["Your (.+) was"]) end
-	
-	rs,rhd,rld =UnitRangedDamage("player");
-	rhd,rld= rhd-math.mod(rhd,1),rld-math.mod(rld,1)
-	if spell == L["Auto Shot"] and abar.range == true and BCB_SAVED.hunter_is_enabled then
-		last_auto_hit = GetTime()
-		trs=rs-SWINGTIME
-		rs = rs-math.mod(rs,0.01)-SWINGTIME
-		Abar_Mhrs(trs,L["Auto Shot"].." "..rs..L["s"],1,.1,.1)
-	elseif spell == L["Shoot"] and abar.range==true then
-		trs=rs
-		rs = rs-math.mod(rs,0.01)
-		Abar_Mhrs(trs,L["Wand"].." "..ons..L["s"],.7,.1,1)
-	elseif (spell == L["Raptor Strike"] or spell == L["Heroic Strike"] or
-	spell == L["Maul"] or spell == L["Cleave"]) and abar.h2h==true then
-		hd,ld,ohd,lhd = UnitDamage("player")
-		hd,ld= hd-math.mod(hd,1),ld-math.mod(ld,1)
-		if pofft == 0 then pofft=offt end
-		pont = ont
-		tons = ons
-		ons = ons - math.mod(ons,0.01)
-		Abar_Mhrs(tons,L["Maul"].." "..ons..L["s"],1,.1,.1)
-	end
+    a,b,spell = string.find(arg1, L["Your (.+) hits"])
+    if not spell then a,b,spell = string.find(arg1, L["Your (.+) crits"]) end
+    if not spell then a,b,spell = string.find(arg1, L["Your (.+) is"]) end
+    if not spell then a,b,spell = string.find(arg1, L["Your (.+) misses"]) end
+    if not spell then a,b,spell = string.find(arg1, L["Your (.+) was"]) end
+
+    rs, rhd, rld = UnitRangedDamage("player")
+    rhd, rld = rhd - math.mod(rhd, 1), rld - math.mod(rld, 1)
+
+    if spell == L["Auto Shot"] and abar.range == true and BCB_SAVED.hunter_is_enabled then
+        last_auto_hit = GetTime()
+        trs = rs - SWINGTIME
+        rs = rs - math.mod(rs, 0.01) - SWINGTIME
+        Abar_Mhrs(trs, L["Auto Shot"].." "..rs..L["s"], 1, .1, .1)
+
+    elseif spell == L["Shoot"] and abar.range == true then
+        trs = rs
+        rs = rs - math.mod(rs, 0.01)
+        Abar_Mhrs(trs, L["Wand"].." "..rs..L["s"], .7, .1, 1)
+
+    elseif spell == L["Mongoose Bite"] and abar.h2h == true then
+        local ons, offs = UnitAttackSpeed("player")
+        if ons then
+            ons = ons - math.mod(ons, 0.01)
+            Abar_Mhrs(ons, L["Mongoose Bite"].." "..ons..L["s"], 0.8, 0.4, 0.1)
+        end
+        if offs then
+            offs = offs - math.mod(offs, 0.01)
+            Abar_Ohs(offs, L["Mongoose Bite"].." "..offs..L["s"], 1, 0.2, 0.2)
+        end
+
+    elseif (spell == L["Raptor Strike"] or spell == L["Heroic Strike"] or
+            spell == L["Maul"] or spell == L["Cleave"]) and abar.h2h == true then
+        hd, ld, ohd, lhd = UnitDamage("player")
+        hd, ld = hd - math.mod(hd, 1), ld - math.mod(ld, 1)
+        if pofft == 0 then pofft = offt end
+        pont = ont
+        tons = ons
+        ons = ons - math.mod(ons, 0.01)
+        Abar_Mhrs(tons, L["Maul"].." "..ons..L["s"], 1, .1, .1)
+    end
 end
 
 function abar_spelldir(spellname)
